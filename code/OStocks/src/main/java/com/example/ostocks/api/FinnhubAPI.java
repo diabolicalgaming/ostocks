@@ -8,6 +8,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.List;
@@ -25,30 +26,34 @@ public class FinnhubAPI
 		return prop.getProperty("apiKey");
 	}
 	
-	//quote example: https://finnhub.io/api/v1/quote?symbol=AAPL&token=bug2u3v48v6qf6lc3d8g
-	
-	public static void getApiClient(String ticker) throws IOException, InterruptedException
+	public static void getMapApiClient(String ticker) throws IOException, InterruptedException
 	{
-		List<String> urls = new ArrayList<>();
-		urls.add("https://finnhub.io/api/v1/stock/profile2?symbol="); urls.add("https://finnhub.io/api/v1/quote?symbol=");
+		String[] urlToData = {"https://finnhub.io/api/v1/stock/profile2?symbol=", "https://finnhub.io/api/v1/quote?symbol="};
 		
 		Map<String, String> data = new HashMap<>();
 		data.put("stock",""); data.put("quote",""); 
 		
 		HttpClient client = HttpClient.newHttpClient();
-		HttpRequest request = HttpRequest.newBuilder()
-				.GET()
-				.header("accept", "application/json")
-				.uri(URI.create("https://finnhub.io/api/v1/stock/profile2?symbol="+ ticker + "&token="+getAPICredentials()))
-				.build();
 		
-		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-		System.out.println(response.body());
+		for(int i = 0; i < urlToData.length; i++)
+		{
+			HttpRequest request = HttpRequest.newBuilder()
+					.GET()
+					.header("accept", "application/json")
+					.uri(URI.create(urlToData[i] + ticker + "&token="+getAPICredentials()))
+					.build();
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			urlToData[i] = response.body();
+		}
+		
+		data.put("stock", urlToData[0]); data.put("quote", urlToData[1]);
+		
+		System.out.println(data);
 	}
 	
 	public static void main(String[] args) throws IOException, InterruptedException
 	{
-		getApiClient("AAPL");
+		getMapApiClient("AMD");
 		String homePath = System.getProperty("user.home");
 		new File(homePath + "/Desktop/TEMP").mkdir();
 		

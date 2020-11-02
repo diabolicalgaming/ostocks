@@ -3,23 +3,25 @@ package com.example.ostocks.models;
 public class Stock 
 {
 	private String ticker;
-	private String company;
-	private String sector;
+	private String companyName;
 	private String country;
-	private double currentPrice;
+	private String currency;
+	private String industry;
+	private String exchange;
 	
 	public Stock()
 	{
 		
 	}
 
-	public Stock(String ticker, String company, String sector, String country, double currentPrice) 
+	public Stock(String ticker, String companyName, String country, String currency, String industry, String exchange) 
 	{
 		this.ticker = ticker;
-		this.company = company;
-		this.sector = sector;
+		this.companyName = companyName;
 		this.country = country;
-		this.currentPrice = currentPrice;
+		this.currency = currency;
+		this.industry = industry;
+		this.exchange = exchange;
 	}
 
 	public String getTicker() {
@@ -30,20 +32,12 @@ public class Stock
 		this.ticker = ticker;
 	}
 
-	public String getCompany() {
-		return company;
+	public String getCompanyName() {
+		return companyName;
 	}
 
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-	public String getSector() {
-		return sector;
-	}
-
-	public void setSector(String sector) {
-		this.sector = sector;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 	public String getCountry() {
@@ -54,11 +48,27 @@ public class Stock
 		this.country = country;
 	}
 
-	public double getCurrentPrice() {
-		return currentPrice;
+	public String getCurrency() {
+		return currency;
 	}
 
-	public void setCurrentPrice(double currentPrice) {
-		this.currentPrice = currentPrice;
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+	public String getIndustry() {
+		return industry;
+	}
+
+	public void setIndustry(String industry) {
+		this.industry = industry;
+	}
+
+	public String getExchange() {
+		return exchange;
+	}
+
+	public void setExchange(String exchange) {
+		this.exchange = exchange;
 	}
 }
